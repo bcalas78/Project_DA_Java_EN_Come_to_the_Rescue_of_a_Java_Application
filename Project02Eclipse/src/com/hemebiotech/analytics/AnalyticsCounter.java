@@ -1,45 +1,44 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AnalyticsCounter {
-	private static int headacheCount = 0; // initialize to 0
-	private static int rashCount = 0; // initialize to 0
-	private static int pupilCount = 0; // initialize to 0
 
-	ISymptomReader s = new ReadSymptomDataFromFile(
+	static ISymptomReader symptomreader = new ReadSymptomDataFromFile(
 			"C:\\Users\\barba\\git\\Project_DA_Java_EN_Come_to_the_Rescue_of_a_Java_Application\\Project02Eclipse\\symptoms.txt");
+	static ISymptomWriter symptomwriter = new WriteSymptomsOccurrencesInResultOutFile("resultOut.txt");
 
-	public static void main(String args[]) throws Exception {
-		// first get input
-		BufferedReader reader = new BufferedReader(new FileReader(
-				"C:\\Users\\barba\\git\\Project_DA_Java_EN_Come_to_the_Rescue_of_a_Java_Application\\Project02Eclipse\\symptoms.txt"));
-		String line = reader.readLine();
+	public static void main(String[] args) throws Exception {
 
-		int i = 0; // set i to 0
-		int headCount = 0; // counts headaches
-		while (line != null) {
-			i++; // increment i
-			System.out.println("symptom from file: " + line);
-			if (line.equals("headache")) {
-				headCount++;
-				System.out.println("number of headaches: " + headCount);
-			} else if (line.equals("rush")) {
-				rashCount++;
-			} else if (line.contains("pupils")) {
-				pupilCount++;
-			}
+		// Read all the symptoms from symptoms.txt file
+		List<String> symptoms = symptomreader.GetSymptoms();
 
-			line = reader.readLine(); // get another symptom
+		// Count the occurrences per symptom with countOccurrences method
+		countOccurrences(symptoms);
+
+		// Ordered the map of symptoms alphabetically
+
+		// write the new ordered list in the result.out file
+		// FileWriter writer = FileWriter ("result.out");
+		// writer.close();
+
+	}
+
+	// method to count occurrences of symptoms using HashMap
+	public static void countOccurrences(List<String> list) {
+		// hashmap to store the occurrence of symptom
+		Map<String, Integer> occurrencePerSymptom = new HashMap<String, Integer>();
+
+		for (String symptom : list) {
+			Integer occurrence = occurrencePerSymptom.get(symptom);
+			occurrencePerSymptom.put(symptom, (occurrence == null) ? 1 : occurrence + 1);
 		}
 
-		// next generate output
-		FileWriter writer = new FileWriter("result.out");
-		writer.write("headache: " + headacheCount + "\n");
-		writer.write("rash: " + rashCount + "\n");
-		writer.write("dialated pupils: " + pupilCount + "\n");
-		writer.close();
+		// displaying the occurrence of symptoms in the list
+		for (Map.Entry<String, Integer> value : occurrencePerSymptom.entrySet()) {
+			System.out.println(value.getKey() + "=" + value.getValue());
+		}
 	}
 }
