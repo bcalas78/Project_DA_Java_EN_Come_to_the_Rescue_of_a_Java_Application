@@ -28,7 +28,7 @@ public class AnalyticsCounter {
 		sortByAlphabet();
 
 		// write the new ordered list in the results.out.txt file
-		// symptomwriter.writeNumberPerSymptom(occurrencePerSymptom);
+		symptomwriter.writeNumberPerSymptom(occurrencePerSymptom);
 	}
 
 	// Function to count occurrences of symptoms using HashMap
