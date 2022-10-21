@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class AnalyticsCounter {
 
@@ -14,7 +16,7 @@ public class AnalyticsCounter {
 			"C:\\Users\\barba\\git\\Project_DA_Java_EN_Come_to_the_Rescue_of_a_Java_Application\\Project02Eclipse\\results.out.txt");
 
 	// hashmap to store the unsorted occurrence of symptom
-	static Map<String, Integer> occurrencePerSymptom = new HashMap<String, Integer>();
+	static SortedMap<String, Integer> occurrencePerSymptom = new TreeMap<>();
 
 	public static void main(String[] args) throws Exception {
 
@@ -49,12 +51,15 @@ public class AnalyticsCounter {
 	// Function to sort map by symptom (Key)
 	public static void sortByAlphabet() {
 
-		ArrayList<String> sortedSymptoms = new ArrayList<String>(occurrencePerSymptom.keySet());
+		List<String> sortedSymptoms = new ArrayList<String>(occurrencePerSymptom.keySet());
 
 		Collections.sort(sortedSymptoms);
+		Map<String, Integer> occurrencePerSymptomSorted = new HashMap<>();
 
 		// Display the TreeMap which is naturally sorted
-		for (String symptom : sortedSymptoms)
+		for (String symptom : sortedSymptoms) {
+			occurrencePerSymptomSorted.put(symptom, occurrencePerSymptom.get(symptom));
 			System.out.println(symptom + "=" + occurrencePerSymptom.get(symptom));
+		}
 	}
 }

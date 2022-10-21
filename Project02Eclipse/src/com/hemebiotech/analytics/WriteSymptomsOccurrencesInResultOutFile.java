@@ -33,11 +33,19 @@ public class WriteSymptomsOccurrencesInResultOutFile implements ISymptomWriter {
 
 			FileWriter resultsOut = new FileWriter(filepath, false);
 
+			// iterate map entries
+			for (Map.Entry<String, Integer> entry : occurrencePerSymptom.entrySet()) {
+
+				// put key and value separated by a colon
+				resultsOut.write(entry.getKey() + "=" + entry.getValue() + "\n");
+
+			}
+
 			// Content to be written on file
 			// Custom input string
 
 			// write() method will write the string in the file
-			resultsOut.write(occurrencePerSymptom.toString());
+			// resultsOut.write(occurrencePerSymptom.toString());
 
 			// Always close the file
 			resultsOut.close();
